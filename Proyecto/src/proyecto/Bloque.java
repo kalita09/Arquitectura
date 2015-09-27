@@ -17,8 +17,8 @@ public class Bloque {
     
     Bloque(){
         this.instrucciones = new int[FILAS][COLUMNAS];
-
     }
+    
     void inicializar(){
         
         for(int i=0; i<FILAS; i++) {
@@ -32,4 +32,28 @@ public class Bloque {
         }
     
     }
+    
+    void guardarDatos(int numeroInstruccion,String[] codificacion){
+
+            for(int j=0; j<COLUMNAS; j++) {
+
+            instrucciones [numeroInstruccion][j] = Integer.parseInt(codificacion[j]);
+
+           }
+ 
+
+    }
+    
+    void imprimir(){
+        for(int i=0; i<FILAS; i++) {
+
+            for(int j=0; j<COLUMNAS; j++) {
+
+            System.out.print(" "+instrucciones [i][j]);
+
+           }
+        }
+        System.out.print("\n");
+    }
+    
 }

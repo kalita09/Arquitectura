@@ -22,13 +22,17 @@ public class Memoria {
         
 	public Memoria() {
 		this.memoria = new Bloque[BLOQUES];
+                this.inicializar();
                 
                 
 	}
 	
-	private void inicializar() {
+	private void inicializar() { 
             
-           
+                for(int i=0; i<BLOQUES; i++) {
+                    memoria[i] = new Bloque();
+	
+		}
             
 		for(int i=0; i<BLOQUES; i++) {
                     memoria[i].inicializar();
@@ -55,18 +59,22 @@ public class Memoria {
                      String[] codificacion;
                      
                      for(int bloque = 0; bloque < 40; bloque++ ) {
-                         if((linea=br.readLine())!=null){
-                        //System.out.println(linea);
-                             for(int i = 0; i<=3; i++) {
-                                     codificacion = linea.split(" ");
-                                     //memoria[0][i]= Integer.parseInt(codificacion[i]);
-                                    // System.out.print(memoria[0][i] + " ");
-                             }
-                             
-                         }
-                              System.out.print( "Bloque "+bloque);
-                     System.out.print("\n");
+
+
+                         
+                        for(int inst = 0; inst < 4; inst++){
+                            if((linea=br.readLine())!=null){
+                            codificacion = linea.split(" ");
+                            memoria[bloque].guardarDatos(inst, codificacion);
+                            }
+
+                        }
+                                    
+         
                      }
+                     this.imprimirMem();
+                    
+                     
                   }
                   catch(Exception e){
                      e.printStackTrace();
@@ -79,10 +87,16 @@ public class Memoria {
                                 e2.printStackTrace();
                              }
                   }
-                
-                
+
             }
                 
 	}
+        void imprimirMem(){
+            for(int bloque = 0; bloque < 40; bloque++ ){
+                System.out.print("BLoque "+bloque +" ");
+                this.memoria[bloque].imprimir();
+                
+            }
+        }
 }
 

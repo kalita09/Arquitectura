@@ -12,6 +12,7 @@ package proyecto;
 public class Main {
     public static void main(String[] args) throws Exception {
     	Memoria m = new Memoria();
+       
     	m.leerArchivo();
 
     }
