@@ -11,9 +11,7 @@ package proyecto;
  */
 public class Main {
     public static void main(String[] args) throws Exception {
-    	Memoria m = new Memoria();
-       
-    	m.leerArchivo();
-
+        Controlador controlador = new Controlador(6);
+        controlador.iniciar();
     }
 }

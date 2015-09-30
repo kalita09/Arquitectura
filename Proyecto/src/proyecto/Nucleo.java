@@ -11,7 +11,8 @@ package proyecto;
  */
 
 public class Nucleo {
-	
+	int PC;
+        int IR;
 	int[][] cacheInstrucciones;
 	int[] registros;
 	
@@ -28,6 +29,12 @@ public class Nucleo {
 			}
 		}
 	}
+        void setPC(int miPC){
+            PC = miPC;
+        }
+        int getPC(){
+            return this.PC;
+        } 
 	
 	
 	

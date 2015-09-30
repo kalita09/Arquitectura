@@ -38,6 +38,7 @@ public class Bloque {
             for(int j=0; j<COLUMNAS; j++) {
 
             instrucciones [numeroInstruccion][j] = Integer.parseInt(codificacion[j]);
+           
 
            }
  
@@ -55,5 +56,6 @@ public class Bloque {
         }
         System.out.print("\n");
     }
+
     
 }

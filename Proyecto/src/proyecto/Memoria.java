@@ -16,8 +16,11 @@ import java.io.FileReader;
 
 public class Memoria {
 	Bloque[] memoria;
-	int numeroHilos = 1;
+	int numeroHilos;
         int BLOQUES = 128;
+        int bloque = 0;
+        int posInicio;
+        int inst = 0;
         
         
 	public Memoria() {
@@ -42,15 +45,20 @@ public class Memoria {
 	
 	//Copiar instrucciones del archivo a la memoria
         
-	public void leerArchivo() {
-            for(int j = 1; j <= numeroHilos; j++ ){           
+	public int leerArchivo(int hiloNum) {
+            numeroHilos = numeroHilos;
+            int bloqueInicio =bloque;
+            posInicio = inst;
+           // for(int j = 1; j <= numeroHilos; j++ ){           
                 File archivo = null;
                 FileReader fr = null;
                 BufferedReader br = null;
+                
 
                 try {
-                     archivo = new File ("Hilos/"+j+".txt");
-                             
+                     archivo = new File ("Hilos/"+hiloNum+".txt");
+                     
+                     boolean seguir = true;         
                      fr = new FileReader (archivo);
                      br = new BufferedReader(fr);
 
@@ -58,21 +66,29 @@ public class Memoria {
                      String linea;
                      String[] codificacion;
                      
-                     for(int bloque = 0; bloque < 40; bloque++ ) {
+                     while(seguir){
 
 
-                         
-                        for(int inst = 0; inst < 4; inst++){
+                       
+                        while(inst < 4 && seguir){
                             if((linea=br.readLine())!=null){
                             codificacion = linea.split(" ");
+                           
                             memoria[bloque].guardarDatos(inst, codificacion);
+                            inst++;
+                            }else{
+                                seguir = false;
+                            
+                            }
+                            
+                            if(inst==4){
+				bloque++;
+                                inst = 0;
                             }
 
                         }
-                                    
-         
                      }
-                     this.imprimirMem();
+                    // this.imprimirMem();
                     
                      
                   }
@@ -88,8 +104,9 @@ public class Memoria {
                              }
                   }
 
-            }
-                
+            //}
+         
+        return bloqueInicio;   
 	}
         void imprimirMem(){
             for(int bloque = 0; bloque < 40; bloque++ ){
@@ -97,6 +114,9 @@ public class Memoria {
                 this.memoria[bloque].imprimir();
                 
             }
+        }
+        int getPosicion(){
+            return this.posInicio;
         }
 }
 
