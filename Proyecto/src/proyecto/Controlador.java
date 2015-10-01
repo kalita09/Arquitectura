@@ -26,10 +26,12 @@ public class Controlador implements Runnable{
 	
         void iniciar(){
             Memoria m = new Memoria();
-            Nucleo nucleo1 = new Nucleo();
-            Nucleo nucleo2 = new Nucleo(); 
-            
-            
+            Nucleo nucleo1 = new Nucleo("Nucleo 1");
+            Nucleo nucleo2 = new Nucleo("Nucleo 2"); 
+            Thread hilo1 = new Thread(nucleo1);
+            Thread hilo2 = new Thread(nucleo2);
+            hilo1.start();
+            hilo2.start();
                     
             int bloque;
             for(int j = 1; j <= numeroHilos; j++ ){   

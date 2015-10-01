@@ -10,16 +10,18 @@ package proyecto;
  * @author b04732
  */
 
-public class Nucleo {
+public class Nucleo implements Runnable{
 	int PC;
     int IR;
 	Bloque[] cacheInstrucciones;
 	int[] registros;
 	int BLOQUES;
 	int apuntadorCache;
+        String nombreNucleo;
 	
-	public Nucleo() {
-		//Primera columna indica numero de bloque: [x][0]
+	public Nucleo(String nombre) {
+                this.nombreNucleo = nombre;
+                //Primera columna indica numero de bloque: [x][0]
 		this.cacheInstrucciones = new Bloque[8];
 		this.registros = new int[32];
 		this.BLOQUES = 8;
@@ -60,12 +62,17 @@ public class Nucleo {
 	
 	public boolean contenerBloque() {
 		for(int i=0; i<BLOQUES; i++) {
-			if(cacheInstrucciones[i].getID() == PC/4) { // PC/4 nos da el número de bloque
+			if(cacheInstrucciones[i].getID() == PC/4) { // PC/4 nos da el numero de bloque
 				return true;
 			}
 		}
 		return false;
 	}
+
+    @Override
+    public void run() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 	
 }
 
