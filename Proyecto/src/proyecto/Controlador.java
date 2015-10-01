@@ -44,22 +44,18 @@ public class Controlador implements Runnable{
             //aqui cargar contexto
             
             //fallo de cache nucleo 1 (falta el bus)
-            //if(!nucleo1.contenerBloque()) {            
+            if(!nucleo1.contenerBloque()) {            
 	            //esto debe ir en un ciclo hasta q se acaben los ciclos
-	            for(int i=0; i<8; i++) {
-	            	Bloque b1 = m.getBloque(colaEspera[0][hiloActual1-1]+i);
-	            	nucleo1.cargarBloque(b1);
-	            }
-           // }
+            	Bloque b1 = m.getBloque(colaEspera[0][hiloActual1-1]+nucleo1.getPC()/4);
+            	nucleo1.cargarBloque(b1);
+            }
             
           //fallo de cache nucleo 2 (falta el bus)
-           // if(!nucleo2.contenerBloque()) {    
-	            //esto debe ir en un ciclo hasta q se acaben los ciclos
-	            for(int i=0; i<8; i++) {	            	
-	            	Bloque b2 = m.getBloque(colaEspera[0][hiloActual2-1]);
-	            	nucleo2.cargarBloque(b2);
-	            }
-        //    }
+            if(!nucleo2.contenerBloque()) {    
+	            //esto debe ir en un ciclo hasta q se acaben los ciclos	            	
+            	Bloque b2 = m.getBloque(colaEspera[0][hiloActual2-1]+nucleo2.getPC()/4);
+            	nucleo2.cargarBloque(b2);
+            }
             
             //aqui se mandan a ejecutar los hilos
             
@@ -72,6 +68,7 @@ public class Controlador implements Runnable{
             */
             m.imprimirMem();
             nucleo1.imprimirCache();
+            nucleo2.imprimirCache();
         }
 
     @Override

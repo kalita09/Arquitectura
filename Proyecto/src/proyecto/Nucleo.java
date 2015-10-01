@@ -32,7 +32,7 @@ public class Nucleo implements Runnable{
 	
 	private void inicializarCaches() {
 		for(int i=0; i<BLOQUES; i++) {
-			cacheInstrucciones[i] = new Bloque(0); //0 para distinguir estos bloques "vacios"
+			cacheInstrucciones[i] = new Bloque(-1); //-1 para distinguir estos bloques "vacios"
 			cacheInstrucciones[i].inicializarCache();
 		}
 	}
@@ -73,6 +73,50 @@ public class Nucleo implements Runnable{
     public void run() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+	
+	public void ejecutarInstruccion() {
+		Bloque b = cacheInstrucciones[PC/4];
+		String instruccion = b.getInstruccion(PC%4);
+		System.out.println(instruccion.charAt(0));
+		/*Switch(instruccion.charAt(0)) {
+			case '8': //DADDI
+				
+			break;
+			
+			case '32': //DADD
+			
+			break;
+			
+			case '34': //DSUB
+			
+			break;
+			
+			case '12': //DMUL
+			
+			break;
+			
+			case '14': //DDIV
+			
+			break;
+			
+			case '4': //BEQZ
+			
+			break;
+			
+			case '5': //BNEZ
+			
+			break;
+			
+			case '3': //JAL
+			
+			break;
+			
+			case '2': //JR
+				
+			break;
+		}*/
+		PC++;
+	}
 	
 }
 
