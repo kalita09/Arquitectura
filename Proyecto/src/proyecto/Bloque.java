@@ -14,12 +14,14 @@ public class Bloque {
     int[][] instrucciones;
     int FILAS = 4;
     int COLUMNAS = 4;
+    int ID;
     
-    Bloque(){
+    Bloque(int id){
+    	this.ID = id;
         this.instrucciones = new int[FILAS][COLUMNAS];
     }
     
-    void inicializar(){
+    void inicializarMemoria(){
         
         for(int i=0; i<FILAS; i++) {
 
@@ -32,6 +34,24 @@ public class Bloque {
         }
     
     }
+    
+    public int getID() {
+    	return this.ID;
+    }
+    
+	void inicializarCache(){
+	        
+	        for(int i=0; i<FILAS; i++) {
+	
+	            for(int j=0; j<COLUMNAS; j++) {
+	
+	            instrucciones [i][j] = 0;
+	
+	           }
+	
+	        }
+	    
+	    }
     
     void guardarDatos(int numeroInstruccion,String[] codificacion){
 

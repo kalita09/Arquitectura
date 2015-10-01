@@ -12,13 +12,18 @@ package proyecto;
 public class Controlador implements Runnable{
 	int[][] colaEspera;
 	int numeroHilos;
-        int apuntadorCola;
+    int apuntadorCola;
+    int hiloActual1;
+    int hiloActual2;
+    
 	public Controlador(int tamanoCola) {
-                
 		colaEspera = new int[2][tamanoCola];
-                numeroHilos = tamanoCola;
-                apuntadorCola =0;
+        numeroHilos = tamanoCola;
+        apuntadorCola = 0;
+        hiloActual1 = 1;
+        hiloActual2 = 2;
 	}
+	
         void iniciar(){
             Memoria m = new Memoria();
             Nucleo nucleo1 = new Nucleo();
@@ -31,10 +36,30 @@ public class Controlador implements Runnable{
                 bloque = m.leerArchivo(j);
                 colaEspera[0][j-1]=bloque;
                 colaEspera[1][j-1]=m.getPosicion();
-                System.out.println(bloque);
-            }  
+                System.out.println(bloque+" "+m.getPosicion());
+            }
             
+            //aqui cargar contexto
             
+            //fallo de cache nucleo 1 (falta el bus)
+            //if(!nucleo1.contenerBloque()) {            
+	            //esto debe ir en un ciclo hasta q se acaben los ciclos
+	            for(int i=0; i<8; i++) {
+	            	Bloque b1 = m.getBloque(colaEspera[0][hiloActual1-1]+i);
+	            	nucleo1.cargarBloque(b1);
+	            }
+           // }
+            
+          //fallo de cache nucleo 2 (falta el bus)
+           // if(!nucleo2.contenerBloque()) {    
+	            //esto debe ir en un ciclo hasta q se acaben los ciclos
+	            for(int i=0; i<8; i++) {	            	
+	            	Bloque b2 = m.getBloque(colaEspera[0][hiloActual2-1]);
+	            	nucleo2.cargarBloque(b2);
+	            }
+        //    }
+            
+            //aqui se mandan a ejecutar los hilos
             
             
             /*
@@ -44,6 +69,7 @@ public class Controlador implements Runnable{
             } 
             */
             m.imprimirMem();
+            nucleo1.imprimirCache();
         }
 
     @Override
