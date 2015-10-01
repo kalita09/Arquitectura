@@ -77,5 +77,11 @@ public class Bloque {
         System.out.print("\n");
     }
 
-    
+    public String getInstruccion(int numInstruccion) {
+    	String instruccion = "";
+    	for(int i=0; i<4; i++) {
+			instruccion += instrucciones[numInstruccion + i]+" ";
+		}
+    	return instruccion;
+    }
 }
