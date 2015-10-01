@@ -17,10 +17,10 @@ import java.io.FileReader;
 public class Memoria {
 	Bloque[] memoria;
 	int numeroHilos;
-        int BLOQUES = 128;
-        int bloque = 0;
-        int posInicio;
-        int inst = 0;
+    int BLOQUES = 128;
+    int bloque = 0;
+    int posInicio;
+    int inst = 0;
         
         
 	public Memoria() {
@@ -33,12 +33,8 @@ public class Memoria {
 	private void inicializar() { 
             
                 for(int i=0; i<BLOQUES; i++) {
-                    memoria[i] = new Bloque();
-	
-		}
-            
-		for(int i=0; i<BLOQUES; i++) {
-                    memoria[i].inicializar();
+                    memoria[i] = new Bloque(i);
+                    memoria[i].inicializarMemoria();
 	
 		}
 	}
@@ -117,6 +113,10 @@ public class Memoria {
         }
         int getPosicion(){
             return this.posInicio;
+        }
+        
+        public Bloque getBloque(int numBloque) {
+        	return memoria[numBloque];
         }
 }
 
