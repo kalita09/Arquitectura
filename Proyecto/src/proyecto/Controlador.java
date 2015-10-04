@@ -5,6 +5,8 @@
  */
 package proyecto;
 
+import java.util.concurrent.CyclicBarrier;
+
 /**
  *
  * @author b04732
@@ -12,6 +14,13 @@ package proyecto;
 public class Controlador implements Runnable{
 	int[][] colaEspera;
 	int numeroHilos;
+	int apuntadorCola;
+    int hiloActual1;
+    int hiloActual2;
+    Memoria m;
+    CyclicBarrier barrera;
+    Nucleo nucleo1;
+    Nucleo nucleo2;
     int apuntadorCola;
     int hiloActual1;
     int hiloActual2;
@@ -25,6 +34,15 @@ public class Controlador implements Runnable{
 	}
 	
         void iniciar(){
+			this.m = new Memoria();
+            this.barrera = new CyclicBarrier(numeroHilos,this);
+            this.nucleo1 = new Nucleo("Nucleo 1",barrera);
+            this.nucleo2 = new Nucleo("Nucleo 2",barrera);
+            Thread hilo1 = new Thread(nucleo1);
+            Thread hilo2 = new Thread(nucleo2);
+            hilo1.start();
+            hilo2.start();
+
             Memoria m = new Memoria();
             Nucleo nucleo1 = new Nucleo();
             Nucleo nucleo2 = new Nucleo(); 
@@ -73,7 +91,12 @@ public class Controlador implements Runnable{
         }
 
     @Override
-    public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+     public void run() {
+ 
+           System.out.println("Todos han llegado a la barrera");
+           this.nucleo1.setPrueba(5);
+           this.nucleo2.setPrueba(5);
+ 
+         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     }
 }
