@@ -5,8 +5,6 @@
  */
 package proyecto;
 
-import java.util.concurrent.CyclicBarrier;
-
 /**
  *
  * @author b04732
@@ -14,15 +12,12 @@ import java.util.concurrent.CyclicBarrier;
 public class Controlador implements Runnable{
 	int[][] colaEspera;
 	int numeroHilos;
-        int apuntadorCola;
-        int hiloActual1;
-        int hiloActual2;
-        Memoria m;
-        CyclicBarrier barrera;
-        Nucleo nucleo1;
-        Nucleo nucleo2;
+    int apuntadorCola;
+    int hiloActual1;
+    int hiloActual2;
+    
 	public Controlador(int tamanoCola) {
-        colaEspera = new int[2][tamanoCola];
+		colaEspera = new int[2][tamanoCola];
         numeroHilos = tamanoCola;
         apuntadorCola = 0;
         hiloActual1 = 1;
@@ -30,15 +25,12 @@ public class Controlador implements Runnable{
 	}
 	
         void iniciar(){
-            this.m = new Memoria();
-            this.barrera = new CyclicBarrier(numeroHilos,this);
-            this.nucleo1 = new Nucleo("Nucleo 1",barrera);
-            this.nucleo2 = new Nucleo("Nucleo 2",barrera);
-            Thread hilo1 = new Thread(nucleo1);
-            Thread hilo2 = new Thread(nucleo2);
-            hilo1.start();
-            hilo2.start();
-           /*Ver lo que esta en cola de espera y donde inician los hilos       
+            Memoria m = new Memoria();
+            Nucleo nucleo1 = new Nucleo();
+            Nucleo nucleo2 = new Nucleo(); 
+            
+            
+                    
             int bloque;
             for(int j = 1; j <= numeroHilos; j++ ){   
                 bloque = m.leerArchivo(j);
@@ -46,7 +38,7 @@ public class Controlador implements Runnable{
                 colaEspera[1][j-1]=m.getPosicion();
                 System.out.println(bloque+" "+m.getPosicion());
             }
-            */
+            
             //aqui cargar contexto
             
             //fallo de cache nucleo 1 (falta el bus)
@@ -72,19 +64,16 @@ public class Controlador implements Runnable{
                 System.out.println(colaEspera[1][j]);
             } 
             */
-           // m.imprimirMem();
-           // nucleo1.imprimirCache();
-           // nucleo2.imprimirCache();
+            m.imprimirMem();
+            nucleo1.imprimirCache();
+            nucleo2.imprimirCache();
             
-            
+            nucleo1.ejecutarInstruccion();
+            nucleo2.ejecutarInstruccion();
         }
 
     @Override
     public void run() {
-
-          System.out.println("Todos han llegado a la barrera");
-          this.nucleo1.setPrueba(5);
-          this.nucleo2.setPrueba(5);
-
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
