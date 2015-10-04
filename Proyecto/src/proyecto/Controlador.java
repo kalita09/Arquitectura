@@ -21,9 +21,6 @@ public class Controlador implements Runnable{
     CyclicBarrier barrera;
     Nucleo nucleo1;
     Nucleo nucleo2;
-    int apuntadorCola;
-    int hiloActual1;
-    int hiloActual2;
     
 	public Controlador(int tamanoCola) {
 		colaEspera = new int[2][tamanoCola];
@@ -44,10 +41,6 @@ public class Controlador implements Runnable{
             hilo2.start();
 
             Memoria m = new Memoria();
-            Nucleo nucleo1 = new Nucleo();
-            Nucleo nucleo2 = new Nucleo(); 
-            
-            
                     
             int bloque;
             for(int j = 1; j <= numeroHilos; j++ ){   
