@@ -15,26 +15,28 @@ import java.util.logging.Logger;
  */
 
 public class Nucleo implements Runnable {
+        //Contexto
 	int PC;
-    int IR;
+        int[] registros;
+        
+        String IR;
 	Bloque[] cacheInstrucciones;
-	int[] registros;
+	
 	int BLOQUES;
 	int apuntadorCache;
 	String nombreNucleo;
-    private CyclicBarrier barrier;
-    int pruebaHilo;
+        private CyclicBarrier barrier;
+        int pruebaHilo;
 	
 	public Nucleo(String nombre, CyclicBarrier barrier) {
 		this.nombreNucleo = nombre;
-        this.barrier = barrier;
-		this.cacheInstrucciones = new Bloque[8];
+                this.barrier = barrier;
 		this.registros = new int[32];
 		this.BLOQUES = 8;
 		this.apuntadorCache = 0;
 		this.cacheInstrucciones = new Bloque[BLOQUES];
 		this.pruebaHilo = 1;
-        this.inicializarCaches();
+                this.inicializarCaches();
 	}
 	
 	private void inicializarCaches() {
@@ -60,16 +62,24 @@ public class Nucleo implements Runnable {
         } 
 	
 	public void imprimirCache(){
-        for(int bloque = 0; bloque < 8; bloque++ ){
-            System.out.print("BLoque "+bloque +" ");
-            this.cacheInstrucciones[bloque].imprimir();
-            
+            for(int bloque = 0; bloque < 8; bloque++ ){
+                System.out.print("BLoque "+bloque +" ");
+                this.cacheInstrucciones[bloque].imprimir();
+
+            }
         }
-    }
+        public void imprimirRegistros(){
+            for(int registro = 0; registro < 32; registro++ ){
+                System.out.print("Registro "+registro +" "+this.registros[registro]);
+                
+
+            }
+            System.out.println("H");
+        }
 	
 	public boolean contenerBloque() {
 		for(int i=0; i<BLOQUES; i++) {
-			if(cacheInstrucciones[i].getID() == PC/4) { // PC/4 nos da el número de bloque
+			if(cacheInstrucciones[i].getID() == PC/4) { // PC/4 nos da el numero de bloque
 				return true;
 			}
 		}
@@ -79,7 +89,11 @@ public class Nucleo implements Runnable {
 	public void setPrueba(int num){
         this.pruebaHilo = num;
         
-    }
+        }
+        public void setContexto(int nuevoPC,int[] nuevoRegistros){
+            this.PC = nuevoPC;
+            this.registros = nuevoRegistros;
+        }
 
     @Override
     public void run() {
@@ -96,10 +110,17 @@ public class Nucleo implements Runnable {
     }
 	
 	public void ejecutarInstruccion() {
+            //Bloque donde se encuentra la instruccion apuntada por el PC actual, previamente cargada
 		Bloque b = cacheInstrucciones[PC/4];
-		String instruccion = b.getInstruccion(PC%4);
-		String[] codificacion = instruccion.split(" ");
+            //Intruccion del bloque (0|1|2|3) 
+                
+             //Pido instruccion al cache la guardo en el IR  
+		IR = b.getInstruccion(PC%4);
+             
+		String[] codificacion = IR.split(" ");
 		System.out.println(codificacion[0]);
+                
+            //Verifica cual operacion es
 		switch(codificacion[0]) {
 			case "8": //DADDI
 				registros[Integer.parseInt(codificacion[2])] =

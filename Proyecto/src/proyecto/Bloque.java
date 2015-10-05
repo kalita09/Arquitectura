@@ -56,9 +56,13 @@ public class Bloque {
     void guardarDatos(int numeroInstruccion,String[] codificacion){
 
             for(int j=0; j<COLUMNAS; j++) {
-
-            instrucciones [numeroInstruccion][j] = Integer.parseInt(codificacion[j]);
-           
+                System.out.println(numeroInstruccion+"."+codificacion[j]+".");
+                if((codificacion[j]=="")||(codificacion[j]==null)){
+                System.out.print("Vacio");
+                }else{
+                 instrucciones [numeroInstruccion][j] = Integer.parseInt(codificacion[j].trim());
+                System.out.println("ENTRO"+numeroInstruccion+codificacion[j]);
+                }
 
            }
  
@@ -76,6 +80,9 @@ public class Bloque {
         }
         System.out.print("\n");
     }
+    
+    /*En la matriz 4x4 que pertenece a un bloque busca 
+    a numInstruccion reclectando los 4 numeros de la instruccion*/
     
     public String getInstruccion(int numInstruccion) {
     	String instruccion = "";

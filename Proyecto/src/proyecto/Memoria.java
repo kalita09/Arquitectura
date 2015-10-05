@@ -69,7 +69,7 @@ public class Memoria {
                         while(inst < 4 && seguir){
                             if((linea=br.readLine())!=null){
                             codificacion = linea.split(" ");
-                           
+                           System.out.print("bloque"+bloque);
                             memoria[bloque].guardarDatos(inst, codificacion);
                             inst++;
                             }else{
