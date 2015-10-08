@@ -19,7 +19,7 @@ public class Memoria {
 	int numeroHilos;
     int BLOQUES = 128;
     int bloque = 0;
-    int posInicio;
+    int posInicio = 0;
     int inst = 0;
         
         
@@ -44,7 +44,7 @@ public class Memoria {
 	public int leerArchivo(int hiloNum) {
             numeroHilos = numeroHilos;
             int bloqueInicio =bloque;
-            posInicio = inst;
+            //posInicio = inst;
            // for(int j = 1; j <= numeroHilos; j++ ){           
                 File archivo = null;
                 FileReader fr = null;
@@ -78,7 +78,7 @@ public class Memoria {
                             }
                             
                             if(inst==4){
-				bloque++;
+                            	bloque++;
                                 inst = 0;
                             }
 
@@ -112,7 +112,7 @@ public class Memoria {
             }
         }
         int getPosicion(){
-            return this.posInicio;
+            return this.bloque;
         }
         
         public Bloque getBloque(int numBloque) {

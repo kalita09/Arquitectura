@@ -58,10 +58,10 @@ public class Bloque {
             for(int j=0; j<COLUMNAS; j++) {
                 System.out.println(numeroInstruccion+"."+codificacion[j]+".");
                 if((codificacion[j]=="")||(codificacion[j]==null)){
-                System.out.print("Vacio");
+                	System.out.print("Vacio");
                 }else{
-                 instrucciones [numeroInstruccion][j] = Integer.parseInt(codificacion[j].trim());
-                System.out.println("ENTRO"+numeroInstruccion+codificacion[j]);
+                	instrucciones [numeroInstruccion][j] = Integer.parseInt(codificacion[j].trim());
+                	System.out.println("ENTRO"+numeroInstruccion+codificacion[j]);
                 }
 
            }

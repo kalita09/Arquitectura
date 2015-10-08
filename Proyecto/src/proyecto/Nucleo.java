@@ -36,6 +36,7 @@ public class Nucleo implements Runnable {
 		this.apuntadorCache = 0;
 		this.cacheInstrucciones = new Bloque[BLOQUES];
 		this.pruebaHilo = 1;
+		this.PC = 0;
                 this.inicializarCaches();
 	}
 	
@@ -63,23 +64,23 @@ public class Nucleo implements Runnable {
 	
 	public void imprimirCache(){
             for(int bloque = 0; bloque < 8; bloque++ ){
-                System.out.print("BLoque "+bloque +" ");
+                System.out.print("Bloque "+bloque +" ");
                 this.cacheInstrucciones[bloque].imprimir();
 
             }
         }
         public void imprimirRegistros(){
             for(int registro = 0; registro < 32; registro++ ){
-                System.out.print("Registro "+registro +" "+this.registros[registro]);
-                
+                System.out.print("Registro "+registro +": "+this.registros[registro]);
+                System.out.print(", ");
 
             }
             System.out.println("H");
         }
 	
-	public boolean contenerBloque() {
-		for(int i=0; i<BLOQUES; i++) {
-			if(cacheInstrucciones[i].getID() == PC/4) { // PC/4 nos da el numero de bloque
+	public boolean contenerBloque(int idBloque) {
+		for(Bloque b : cacheInstrucciones) {
+			if(b.getID() == idBloque) {
 				return true;
 			}
 		}
@@ -99,9 +100,14 @@ public class Nucleo implements Runnable {
     public void run() {
         System.out.println(this.nombreNucleo);
             try {
-            System.out.println(Thread.currentThread().getName() + this.pruebaHilo);
+            	//if(this.contenerBloque()) {
+            		this.ejecutarInstruccion();
+            	//}
+            	this.barrier.await();
+            	
+            /*System.out.println(Thread.currentThread().getName() + " " + this.pruebaHilo);
             this.barrier.await();
-            System.out.println(Thread.currentThread().getName() + this.pruebaHilo);
+            System.out.println(Thread.currentThread().getName() + " " + this.pruebaHilo);*/
             } catch (InterruptedException ex) {
                 Logger.getLogger(Nucleo.class.getName()).log(Level.SEVERE, null, ex);
             } catch (BrokenBarrierException ex) {
